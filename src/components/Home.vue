@@ -2,8 +2,8 @@
   <div class="container">
     <div class="row">
       <header class="col-12">
-        <h1>Plantilla para proyectos</h1>
-        <p>Este repositorio sirve como punto de partida para los proyectos donde se use Bootstrap y SASS.</p>
+        <h1>CINEMACON</h1>
+        <p>El mejor portal de cine que podrás encontrar.</p>
       </header>
     </div>
   </div>
@@ -15,14 +15,8 @@
       <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
     </div>
     <div class="carousel-inner">
-      <div class="carousel-item active">
-        <img src="https://ethic.es/wp-content/uploads/2023/03/imagen.jpg" class="d-block w-100" alt="...">
-      </div>
-      <div class="carousel-item">
-        <img src="https://www.adslzone.net/app/uploads-adslzone.net/2019/04/borrar-fondo-imagen-1200x675.jpg" class="d-block w-100" alt="...">
-      </div>
-      <div class="carousel-item">
-        <img src="https://png.pngtree.com/background/20230612/original/pngtree-wolf-animals-images-wallpaper-for-pc-384x480-picture-image_3180467.jpg" class="d-block w-100" alt="...">
+      <div v-for="(movie, index) in movies" :key="index" :class="{ 'carousel-item': true, 'active': index === 0 }" data-bs-interval="4000">
+        <img :src="getMovieImageUrl(movie.backdrop_path)" class="d-block w-100" alt="Movie Poster">
       </div>
     </div>
     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
@@ -60,7 +54,42 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
+
+
+const apiKey = ref('4431fed8390b02d6c28655feb536156a')
+const bearerToken = ref('eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI0NDMxZmVkODM5MGIwMmQ2YzI4NjU1ZmViNTM2MTU2YSIsInN1YiI6IjY1YThmOTNlYzRmNTUyMDEyNzhlNjU2OSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.nArKWLxihtW5aycNC-GAqUwF7JGeo_Rj13o_5ZA7K3w')
+const movies = ref([])
+
+
+const getMoviesUrlApi = () => {
+   fetch('https://api.themoviedb.org/3/movie/popular?api_key=' + apiKey.value)
+       .then(response => response.json())
+       .then(data => movies.value = data.results.slice(0,3))
+      
+}
+const getMoviesHeaderApi = () => {
+   fetch('https://api.themoviedb.org/3/movie/popular', {
+       headers: {
+           'Authorization': 'Bearer ' + bearerToken.value
+       }
+   })
+       .then(response => response.json())
+       .then(data => movies.value = data.results)
+}
+onMounted(() => {
+ getMoviesUrlApi()
+})
+
+
+
+
+const getMovieImageUrl = (posterPath) => {
+   if (posterPath) {
+       return 'https://image.tmdb.org/t/p/w500/' + posterPath;
+   }
+}
+
 
 
 </script>
