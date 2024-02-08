@@ -1,12 +1,5 @@
 <template>
-  <div class="container">
-    <div class="row">
-      <header class="col-12">
-        <h1>CINEMACON</h1>
-        <p>El mejor portal de cine que podrás encontrar.</p>
-      </header>
-    </div>
-  </div>
+ 
 
   <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-indicators">
@@ -16,7 +9,7 @@
     </div>
     <div class="carousel-inner">
       <div v-for="(movie, index) in movies" :key="index" :class="{ 'carousel-item': true, 'active': index === 0 }" data-bs-interval="4000">
-        <img :src="getMovieImageUrl(movie.backdrop_path)" class="d-block w-100" alt="Movie Poster">
+        <img :src="'https://image.tmdb.org/t/p/w500/' + movie.backdrop_path" class="d-block w-100" alt="Movie Poster">
       </div>
     </div>
     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
@@ -30,27 +23,37 @@
   </div>
 
 
-    
+<div class="container">
+  <h1 class="display-4 text-center my-4">PELÍCULAS TOP RATED</h1>
+</div>
+   
 
 
+<div class="container">
+  <div class="row">
+    <div class="col-md-4" v-for="(movie, index) in top_rated" :key="index">
+      <div class="card mb-4">
+        <img :src="'https://image.tmdb.org/t/p/w500/' + movie.poster_path" class="card-img-top" alt="Movie Poster">
+        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill "  :class="{'bg-warning text-dark': movie.vote_average >= 8.55, 'bg-success': movie.vote_average < 8.55 }">
+            {{ (movie.vote_average * 10 ).toFixed(2)}}
+            <span class="visually-hidden">unread messages</span>
+        </span>
 
-  <div class="card" style="width: 18rem;">
-    <img class="card-img-top" src="https://www.adslzone.net/app/uploads-adslzone.net/2019/04/borrar-fondo-imagen-1200x675.jpg" alt="Card image cap">
-    <div class="card-body">
-      <h5 class="card-title">Card title</h5>
-      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-      <a href="#" class="btn btn-primary">Go somewhere</a>
-    </div>
-  </div>
-
-  <div class="card" style="width: 18rem;">
-    <img class="card-img-top" src="https://www.adslzone.net/app/uploads-adslzone.net/2019/04/borrar-fondo-imagen-1200x675.jpg" alt="Card image cap">
-    <div class="card-body">
-      <h5 class="card-title">Card title</h5>
-      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-      <a href="#" class="btn btn-primary">Go somewhere</a>
+        <div class="card-body">
+          <h5 class="card-title">{{ movie.title }}</h5>
+          <p class="card-text">{{ movie.overview.slice(0, 200) + '...' }}</p>
+          <a href="#" class="btn btn-primary">Ver más</a>
+        </div>
+      </div>
     </div>
   </div>  
+</div>
+
+
+
+
+
+ 
 </template>
 
 <script setup>
@@ -60,14 +63,21 @@ import { ref, onMounted } from 'vue'
 const apiKey = ref('4431fed8390b02d6c28655feb536156a')
 const bearerToken = ref('eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI0NDMxZmVkODM5MGIwMmQ2YzI4NjU1ZmViNTM2MTU2YSIsInN1YiI6IjY1YThmOTNlYzRmNTUyMDEyNzhlNjU2OSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.nArKWLxihtW5aycNC-GAqUwF7JGeo_Rj13o_5ZA7K3w')
 const movies = ref([])
+const top_rated = ref([])
 
 
 const getMoviesUrlApi = () => {
    fetch('https://api.themoviedb.org/3/movie/popular?api_key=' + apiKey.value)
        .then(response => response.json())
-       .then(data => movies.value = data.results.slice(0,3))
-      
+       .then(data => movies.value = data.results.slice(0,3))  
 }
+
+const getMoviesUrlApi2 = () => {
+   fetch('https://api.themoviedb.org/3/movie/top_rated?api_key=' + apiKey.value)
+       .then(response => response.json())
+       .then(data => top_rated.value = data.results.slice(0,18))  
+}
+
 const getMoviesHeaderApi = () => {
    fetch('https://api.themoviedb.org/3/movie/popular', {
        headers: {
@@ -77,32 +87,28 @@ const getMoviesHeaderApi = () => {
        .then(response => response.json())
        .then(data => movies.value = data.results)
 }
+
+
+
 onMounted(() => {
  getMoviesUrlApi()
+ getMoviesUrlApi2()
 })
 
 
-
-
-const getMovieImageUrl = (posterPath) => {
-   if (posterPath) {
-       return 'https://image.tmdb.org/t/p/w500/' + posterPath;
-   }
-}
 
 
 
 </script>
 
 <style lang="scss" scoped>
-$color-primario: #183b31;
+$color-primario: #c3ffee;
 $color-secundario: #C69774;
-$color-terciario: #F8DFD4;
-$color-cuarto: #FFEFE8;
+$color-terciario: #000000;
+$color-cuarto: #000000;
 header {
-  background-color: $color-primario;
+  
   h1 {
-    text-decoration: underline;
     color: $color-terciario;
   }
   p {
