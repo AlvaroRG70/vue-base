@@ -1,4 +1,4 @@
-<script setup>
+<script>
 import { RouterLink, RouterView } from "vue-router";
 </script>
 
@@ -26,10 +26,10 @@ import { RouterLink, RouterView } from "vue-router";
                 </a>
               </li>
             </ul>
-            <form class="d-flex" role="search">
-              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-              <button class="btn btn-outline-success" type="submit">Search</button>
-            </form>
+            <div class="d-flex">
+              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" v-model="peliculaId">
+              <button @click="$router.push('/buscador?cadena=' + peliculaId)"  class="btn-primary btn btn-outline-success">Buscador</button>
+            </div>
           </div>
         </div>
       </nav>
@@ -53,8 +53,8 @@ import { RouterLink, RouterView } from "vue-router";
   </div>
 </template>
 
-<script>
-
+<script setup>
+  import { RouterLink, RouterView } from "vue-router";
 </script>
 
 <style scoped>
