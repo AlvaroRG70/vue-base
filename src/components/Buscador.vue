@@ -1,34 +1,52 @@
 <template>
   <div class="container">
     <h1 class="display-4 text-center my-4">Buscando por {{ route.query.cadena }} ...</h1>
+    <div class="form-group">
+      <label for="scoreRange">Filtrar por puntuación:</label>
+      <input type="range" class="form-range" id="scoreRange" min="1" max="10" step="1" v-model="min_vote">
+      <span>Media de películas: {{ min_vote }}</span>
+    </div>
   </div>
-  <div class="card mb-3">
-    <div class="row g-0" v-for="movie in movies" :key="movie.id">
-      <div class="col-md-4">
-        <img :src="'https://image.tmdb.org/t/p/w500/' + movie.poster_path" class="img-fluid rounded-start" alt="Movie Poster">
-      </div>
-      <div class="col-md-8">
-        <div class="card-body">
-          <h5 class="card-title">{{ movie.title }}</h5>
-          <p class="card-text"><strong>Fecha:</strong> {{ movie.release_date }}</p>
-          <p class="card-text">{{ movie.overview.slice(0, 200) + '...' }}</p>
-          <p class="card-text">Puntuación: {{ movie.vote_average *10 }} </p>
+  <div class="container">
+    <div class="card mb-3" v-for="movie in filteredMovies" :key="movie.id">
+      <div class="row g-0">
+        
+        <div class="col-md-2 d-flex align-items-center justify-content-end">
+          <div class="rounded overflow-hidden border border-dark">
+            <img v-if="movie.poster_path" :src="'https://image.tmdb.org/t/p/w500/' + movie.poster_path" class="img-fluid rounded-start" alt="Movie Poster">
+            <img v-else src="../assets/noexiste.png" class="img-fluid rounded-start" alt="Movie Poster">
+          </div>
+        </div>
 
-
+        <div class="col-md-10">
+          <div class="card-body">
+            <h5 class="card-title">{{ movie.title }}</h5>
+            <p class="card-text"><strong>Fecha:</strong> {{ movie.release_date }}</p>
+            <p class="card-text">{{ movie.overview.slice(0, 200) + '...' }}</p>
+            <p class="card-text">Puntuación: {{ (movie.vote_average * 10).toFixed(2) }}</p>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </template>
+
+
+
+
+
   
-  <script setup>
+<script setup>
 import { useRoute } from 'vue-router';
-import { ref } from 'vue';
+import { onMounted, onUpdated, ref, computed } from 'vue';
 
 const route = useRoute();
 const movies = ref([]);
 const loading = ref(false);
 const error = ref(null);
+const min_vote = ref(0);
+
+
 
 const apiKey = '4431fed8390b02d6c28655feb536156a';
 
@@ -54,26 +72,23 @@ function searchMovies() {
     });
 }
 
-searchMovies();
+const filteredMovies = computed(() => {
+  return movies.value.filter(movie => movie.vote_average >= min_vote.value);
+});
+
+onUpdated(()=> {
+  searchMovies();
+})
+
+onMounted(()=> {
+  searchMovies();
+})
+
+
+
   </script>
 
   
   
-  <style lang="scss" scoped>
-  $color-primario: #183b31;
-  $color-secundario: #C69774;
-  $color-terciario: #F8DFD4;
-  $color-cuarto: #FFEFE8;
-  header {
-    background-color: $color-primario;
-    h1 {
-      text-decoration: underline;
-      color: $color-terciario;
-    }
-    p {
-      color: $color-cuarto;
-    }
-  }
-  </style>
   
   
