@@ -1,5 +1,9 @@
 <template>
- 
+  
+  <div class="container">
+    <h1 class="display-2 text-center my-4">CINEMACON</h1>
+    <h1 class="display-8 text-center my-4">EL MEJOR PORTAL DE CINE DE TODOS LOS TIEMPOS</h1>
+  
 
   <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-indicators">
@@ -23,13 +27,13 @@
   </div>
 
 
-<div class="container">
+
   <h1 class="display-4 text-center my-4">PELÍCULAS TOP RATED</h1>
-</div>
+
    
 
 
-<div class="container">
+
   <div class="row">
     <div class="col-md-4" v-for="(movie, index) in top_rated" :key="index">
       <div class="card mb-4">
@@ -42,7 +46,7 @@
         <div class="card-body">
           <h5 class="card-title">{{ movie.title }}</h5>
           <p class="card-text">{{ movie.overview.slice(0, 200) + '...' }}</p>
-          <a href="#" class="btn btn-primary">Ver más</a>
+          <button class="btn btn-primary" @click="$router.push('/film?id=' + movie.id)">Ver más</button>
         </div>
       </div>
     </div>
@@ -53,11 +57,15 @@
 
 
 
- 
+<main>
+  <RouterView />
+</main>
+
 </template>
 
 <script setup>
 import { ref, onMounted } from 'vue'
+import {RouterView, useRoute} from 'vue-router'
 
 
 const apiKey = ref('4431fed8390b02d6c28655feb536156a')
@@ -102,18 +110,5 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
-$color-primario: #c3ffee;
-$color-secundario: #C69774;
-$color-terciario: #000000;
-$color-cuarto: #000000;
-header {
-  
-  h1 {
-    color: $color-terciario;
-  }
-  p {
-    color: $color-cuarto;
-  }
-}
 </style>
 

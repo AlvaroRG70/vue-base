@@ -6,8 +6,7 @@
       <input type="range" class="form-range" id="scoreRange" min="1" max="10" step="1" v-model="min_vote">
       <span>Media de películas: {{ min_vote }}</span>
     </div>
-  </div>
-  <div class="container">
+
     <div class="card mb-3" v-for="movie in filteredMovies" :key="movie.id">
       <div class="row g-0">
         
@@ -24,7 +23,9 @@
             <p class="card-text"><strong>Fecha:</strong> {{ movie.release_date }}</p>
             <p class="card-text">{{ movie.overview.slice(0, 200) + '...' }}</p>
             <p class="card-text">Puntuación: {{ (movie.vote_average * 10).toFixed(2) }}</p>
+            <button class="btn btn-primary" @click="$router.push('/film?id=' + movie.id)">Ver más</button>    
           </div>
+          
         </div>
       </div>
     </div>
@@ -72,9 +73,15 @@ function searchMovies() {
     });
 }
 
-const filteredMovies = computed(() => {
-  return movies.value.filter(movie => movie.vote_average >= min_vote.value);
+
+const sortedMoviesByReleaseDate = computed(() => {
+  return [...movies.value].sort((a, b) => new Date(b.release_date) - new Date(a.release_date));
 });
+
+const filteredMovies = computed(() => {
+  return sortedMoviesByReleaseDate.value.filter(movie => movie.vote_average >= min_vote.value);
+});
+
 
 onUpdated(()=> {
   searchMovies();
