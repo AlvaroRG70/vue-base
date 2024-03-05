@@ -1,12 +1,17 @@
 <template>
   <div class="container">
-    <h1 class="display-4 text-center my-4">Buscando por {{ route.query.cadena }} ...</h1>
+    <h1 class="display-4 text-center my-4">Buscando por "{{ route.query.cadena }}"</h1>
     <div class="form-group">
       <label for="scoreRange">Filtrar por puntuación:</label>
       <input type="range" class="form-range" id="scoreRange" min="1" max="10" step="1" v-model="min_vote">
       <span>Media de películas: {{ min_vote }}</span>
     </div>
+    <div>
+      <button class="btn" @click= "orden = (orden +1 )%3" v-if="orden == 0">🔻</button>
+      <button class="btn" @click= "orden = (orden +1 )%3" v-if="orden == 1">🔺</button>
+      <button class="btn" @click= "orden = (orden +1 )%3" v-if="orden == 2"> ☒ </button>
 
+    </div>
     <div class="card mb-3" v-for="movie in filteredMovies" :key="movie.id">
       <div class="row g-0">
         
@@ -46,6 +51,7 @@ const movies = ref([]);
 const loading = ref(false);
 const error = ref(null);
 const min_vote = ref(0);
+const orden = ref(0);
 
 
 
@@ -75,7 +81,19 @@ function searchMovies() {
 
 
 const sortedMoviesByReleaseDate = computed(() => {
-  return [...movies.value].sort((a, b) => new Date(b.release_date) - new Date(a.release_date));
+
+  if (orden.value == 0){
+    return movies.value
+
+  } else if (orden.value == 1){  
+    return [...movies.value].sort((a, b) => new Date(b.release_date) - new Date(a.release_date));
+
+  } else{
+    return [...movies.value].sort((a, b) => new Date(a.release_date) - new Date(b.release_date));
+
+  }
+
+
 });
 
 const filteredMovies = computed(() => {
@@ -95,7 +113,6 @@ onMounted(()=> {
 
   </script>
 
-  
   
   
   

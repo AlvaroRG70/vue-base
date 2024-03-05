@@ -46,7 +46,7 @@
         <div class="card-body">
           <h5 class="card-title">{{ movie.title }}</h5>
           <p class="card-text">{{ movie.overview.slice(0, 200) + '...' }}</p>
-          <button class="btn btn-primary" @click="$router.push('/film?id=' + movie.id)">Ver más</button>
+          <button class="btn btn-primary bg-dark" @click="$router.push('/film?id=' + movie.id)">Ver más</button>
         </div>
       </div>
     </div>

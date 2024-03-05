@@ -22,7 +22,7 @@ import { RouterLink, RouterView } from "vue-router";
             </ul>
             <div class="d-flex">
               <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" v-model="peliculaId">
-              <button class="btn btn-outline-success" @click="$router.push('/buscador?cadena=' + peliculaId)">Buscar</button>
+              <button class="btn btn-primary bg-dark" @click="$router.push('/buscador?cadena=' + peliculaId)">Buscar</button>
             </div>
           </div>
         </div>

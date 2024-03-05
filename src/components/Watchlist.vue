@@ -21,7 +21,7 @@
             <p class="card-text"><strong>Fecha:</strong> {{ movie.release_date }}</p>
             <p class="card-text">{{ movie.overview.slice(0, 200) + '...'}}</p>
             <p class="card-text">Puntuación: {{ (movie.vote_average * 10).toFixed(2) }}</p>
-            <button class="btn btn-primary" @click="$router.push('/film?id=' + movie.id)">Ver más</button>
+            <button class="btn btn-primary bg-dark" @click="$router.push('/film?id=' + movie.id)">Ver más</button>
           </div>
         </div>
       </div>
@@ -61,6 +61,8 @@
       console.error('Error fetching movie:', error)
     }
   };
+
+  
 
   onMounted(() => {
     getMovieCuenta();

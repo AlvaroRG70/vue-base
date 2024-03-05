@@ -101,7 +101,7 @@
 
       <h3 class="accordion-header" data-bs-toggle="collapse" data-bs-target="#commentsCollapse" aria-expanded="false"
         aria-controls="commentsCollapse">
-        Comentarios
+        Comentarios 
       </h3>
       <div id="commentsCollapse" class="accordion-collapse collapse" aria-labelledby="commentsHeading"
         data-bs-parent="#accordionExample">
