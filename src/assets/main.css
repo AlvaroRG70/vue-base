@@ -1,9 +1,10 @@
 @import './base.css';
+@import './_styles.scss';
 
 #app {
-
-
+  padding-bottom: 5%;
   font-weight: normal;
+
 }
 
 a,

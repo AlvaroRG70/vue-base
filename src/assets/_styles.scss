@@ -1,0 +1,43 @@
+@import '_variables.scss';
+
+
+// modulos
+
+.accordion-header:after {
+    content: "\eab2";
+    /* flecha hacia abajo */
+    font-family: "bootstrap-icons";
+    /* usa las iconos de Bootstrap */
+    position: absolute;
+    top: 50%;
+    right: 0.5rem;
+    transform: translateY(-50%);
+    transition: transform 0.3s ease;
+}
+
+.accordion-header {
+    border-bottom: 1px solid #dee2e6;
+    position: relative;
+    cursor: pointer;
+}
+
+.accordion-header[aria-expanded="true"]:after {
+    content: "\eab3";
+    /* flecha hacia arriba */
+}
+
+//nesting
+
+div {
+    p {
+        color: $color_parrafo;
+        
+    }
+}
+
+
+#app {
+
+    background-color: $color_fondo;
+}
+
