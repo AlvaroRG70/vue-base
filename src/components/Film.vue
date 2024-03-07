@@ -24,13 +24,37 @@
 
             <p>Título original: {{ movie.original_language }}</p>
 
-            <button @click="addToWatchlist" class="btn btn-primary bg-dark">Añadir a la lista de seguimiento</button>
-            <button @click="deleteToWatchlist" class="btn btn-primary bg-dark">Eliminar de la lista de
-              seguimiento</button>
-            <router-link to="/" class="btn btn-primary bg-dark">Volver</router-link>
+            <button @click="addToWatchlist" class="btn btn-primary bg-dark m-2">Añadir a la lista de seguimiento</button>
+            <button @click="deleteToWatchlist" class="btn btn-primary bg-dark m-2">Eliminar de la lista de seguimiento</button>
+            <button type="button" class="btn btn-primary bg-dark m-2" data-bs-toggle="modal" data-bs-target="#trailerModal">
+              Ver Trailer
+            </button>
+            <router-link to="/" class="btn btn-primary bg-dark m-2">Volver</router-link>
 
 
 
+
+          </div>
+        </div>
+      </div>
+
+
+
+      <div class="modal fade" id="trailerModal" tabindex="-1" aria-labelledby="trailerModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="trailerModalLabel">Trailer</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+      
+              <div v-if="trailerVideo" class="text-center">
+                <iframe width="560" height="315" :src="'https://www.youtube.com/embed/' + trailerVideo.key" frameborder="0" allowfullscreen></iframe>
+                <p>Estas viendo el trailer de {{ movie.title }}</p>
+              </div>
+            </div>
+            
           </div>
         </div>
       </div>
@@ -68,17 +92,7 @@
       </div>
 
 
-      <h3 class="accordion-header" data-bs-toggle="collapse" data-bs-target="#trailerCollapse" aria-expanded="false"
-        aria-controls="trailerCollapse">
-        Trailer
-      </h3>
-      <div id="trailerCollapse" class="accordion-collapse collapse" aria-labelledby="trailerHeading"
-        data-bs-parent="#accordionExample">
-        <div v-if="trailerVideo" class="text-center mb-5 mt-5">
-          <iframe width="560" height="315" :src="'https://www.youtube.com/embed/' + trailerVideo.key" frameborder="0"
-            allowfullscreen class="mx-auto d-block"></iframe>
-        </div>
-      </div>
+      
 
 
       <h3 class="accordion-header" data-bs-toggle="collapse" data-bs-target="#similarCollapse" aria-expanded="false"
