@@ -4,7 +4,7 @@
 // modulos
 
 .accordion-header:after {
-    content: "\eab2";
+    content: "🔻";
     /* flecha hacia abajo */
     font-family: "bootstrap-icons";
     /* usa las iconos de Bootstrap */
@@ -22,7 +22,7 @@
 }
 
 .accordion-header[aria-expanded="true"]:after {
-    content: "\eab3";
+    content: "🔺";
     /* flecha hacia arriba */
 }
 
